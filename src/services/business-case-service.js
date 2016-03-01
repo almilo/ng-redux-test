@@ -1,5 +1,3 @@
-import { Injectable, Inject } from 'ng-forward';
-
 const mockBusinessCases = {
     open: [
         {
@@ -25,8 +23,6 @@ const mockBusinessCases = {
     ]
 };
 
-@Injectable
-@Inject('$q')
 export default class {
     constructor($q) {
         this.$q = $q;

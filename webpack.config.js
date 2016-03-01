@@ -12,8 +12,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            widgets: src('components/widgets'),
-            services: src('services')
+            widgets: src('components/widgets')
         }
     },
     module: {

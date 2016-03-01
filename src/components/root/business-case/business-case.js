@@ -1,5 +1,4 @@
 import { Component, Inject } from 'ng-forward';
-import BusinessCasesService from 'services/business-case-service';
 import ShortInfoListComponent from './short-info-list/short-info-list';
 import ShortInfoComponent from './short-info/short-info';
 
@@ -9,38 +8,43 @@ import ShortInfoComponent from './short-info/short-info';
     template: `
             <short-info-list
                 [items]="ctrl.businessCases"
-                (select)="ctrl.select($event)"
-                class="col-md-4"></short-info-list>
+                (select)="ctrl.selectBusinessCase($event.detail)"
+                class="col-md-4">
+            </short-info-list>
             <short-info
                 [item]="ctrl.selectedBusinessCase"
-                (more-options)="ctrl.showMoreOptions($event)"
-                (archive)="ctrl.archive($event)"
+                (more-options)="ctrl.showMoreOptions($event.detail)"
+                (archive)="ctrl.archive($event.detail)"
                 class="col-md-8">
             </short-info>
             `
 })
-@Inject(BusinessCasesService)
+@Inject('$ngRedux', '$scope', 'BusinessCaseAsyncActions')
 export default class {
-    constructor(businessCasesService) {
-        this.businessCasesService = businessCasesService;
+    constructor($ngRedux, $scope, BusinessCaseAsyncActions) {
+        const unsubscribe = $ngRedux.connect(this.mapStateToThis, BusinessCaseAsyncActions)(this);
+
+        $scope.$on('$destroy', unsubscribe);
+    }
+
+    mapStateToThis(state) {
+        return {
+            businessCases: state.businessCases,
+            selectedBusinessCase: state.selectedBusinessCase
+        };
     }
 
     ngOnInit() {
-        this.businessCasesService.getAllBusinessCases().then(businessCases => {
-            this.businessCases = businessCases;
-            this.selectedBusinessCase = this.businessCases.open[0];
-        });
+        if (!this.businessCases) {
+            this.fetchBusinessCases();
+        }
     }
 
-    showMoreOptions(event) {
-        console.log(event.detail);
+    showMoreOptions(businessCase) {
+        console.log(businessCase);
     }
 
-    archive(event) {
-        console.log(event.detail);
-    }
-
-    select(event) {
-        console.log(event.detail);
+    archive(businessCase) {
+        console.log(businessCase);
     }
 }
