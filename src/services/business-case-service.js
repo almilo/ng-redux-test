@@ -20,7 +20,25 @@ const mockBusinessCases = {
             name: 'Säntis Berggasthaus',
             value: 1573.90
         }
-    ]
+    ],
+    pending: [
+        {
+            id: 10,
+            name: 'Foo',
+            value: 1700.50
+        },
+        {
+            id: 11,
+            name: 'Bar',
+            value: 105.10
+        },
+        {
+            id: 12,
+            name: 'Baz AG',
+            value: 2545
+        }
+    ],
+    closed: []
 };
 
 export default class {

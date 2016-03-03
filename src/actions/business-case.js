@@ -1,31 +1,31 @@
-export const FETCH_BUSINESS_CASES = 'FETCH_BUSINESS_CASES';
-export const SELECT_BUSINESS_CASE = 'SELECT_BUSINESS_CASE';
+export const BUSINESS_CASES_FETCHED = 'BUSINESS_CASES_FETCHED';
+export const BUSINESS_CASE_SELECTED = 'BUSINESS_CASE_SELECTED';
 
 export default function (BusinessCaseService) {
     return {
-        fetchBusinessCases,
+        triggerFetchBusinessCases,
         selectBusinessCase
     };
 
-    function fetchBusinessCases() {
+    function triggerFetchBusinessCases() {
         return (dispatch) => {
             BusinessCaseService.getAllBusinessCases().then(businessCases => {
-                dispatch(fetch(businessCases))
+                dispatch(businessCasesFetched(businessCases))
             });
         }
     }
-}
 
-function fetch(businessCases) {
-    return {
-        type: FETCH_BUSINESS_CASES,
-        businessCases
-    };
-}
+    function businessCasesFetched(businessCases) {
+        return {
+            type: BUSINESS_CASES_FETCHED,
+            businessCases
+        };
+    }
 
-function selectBusinessCase(id) {
-    return {
-        type: SELECT_BUSINESS_CASE,
-        id
-    };
+    function selectBusinessCase(id) {
+        return {
+            type: BUSINESS_CASE_SELECTED,
+            id
+        };
+    }
 }

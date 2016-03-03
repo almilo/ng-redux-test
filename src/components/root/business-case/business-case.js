@@ -19,10 +19,10 @@ import ShortInfoComponent from './short-info/short-info';
             </short-info>
             `
 })
-@Inject('$ngRedux', '$scope', 'BusinessCaseAsyncActions')
+@Inject('$ngRedux', '$scope', 'BusinessCaseActions')
 export default class {
-    constructor($ngRedux, $scope, BusinessCaseAsyncActions) {
-        const unsubscribe = $ngRedux.connect(this.mapStateToThis, BusinessCaseAsyncActions)(this);
+    constructor($ngRedux, $scope, BusinessCaseActions) {
+        const unsubscribe = $ngRedux.connect(this.mapStateToThis, BusinessCaseActions)(this);
 
         $scope.$on('$destroy', unsubscribe);
     }
@@ -36,7 +36,7 @@ export default class {
 
     ngOnInit() {
         if (!this.businessCases) {
-            this.fetchBusinessCases();
+            this.triggerFetchBusinessCases();
         }
     }
 
