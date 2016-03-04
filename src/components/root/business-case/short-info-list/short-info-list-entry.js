@@ -6,18 +6,16 @@ import CurrencyWidget from 'widgets/currency-widget';
     directives: [CurrencyWidget],
     template: `
         <div (click)="ctrl.onSelect()" style="padding: 1em 0 1em 0; cursor: pointer;">
-            <strong class="col-md-8">{{ctrl.name}}</strong>
-            <strong><currency-widget class="col-md-4" [value]="ctrl.quantity" [symbol]="'CHF'"></currency-widget></strong>
+            <strong class="col-md-8">{{ctrl.item.name}}</strong>
+            <strong><currency-widget class="col-md-4" [value]="ctrl.item.quantity" [symbol]="'CHF'"></currency-widget></strong>
         </div>
     `
 })
 export default class {
-    @Input() id = undefined;
-    @Input() name = undefined;
-    @Input() quantity = undefined;
+    @Input() item = undefined;
     @Output() select = new EventEmitter();
 
     onSelect() {
-        this.select.next(this.id);
+        this.select.next(this.item);
     }
 }

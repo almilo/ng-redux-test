@@ -15,27 +15,21 @@ import ShortInfoListEntry from './short-info-list-entry';
             <div role="tabpanel" class="tab-pane active" id="open">
                 <short-info-list-entry
                     ng-repeat="item in ctrl.items.open track by item.id"
-                    [id]="item.id"
-                    [name]="item.name"
-                    [quantity]="item.value"
+                    [item]="item"
                     (select)="ctrl.onSelect($event)">
                 </short-info-list-entry>
             </div>
             <div role="tabpanel" class="tab-pane" id="pending">
                 <short-info-list-entry
                     ng-repeat="item in ctrl.items.pending track by item.id"
-                    [id]="item.id"
-                    [name]="item.name"
-                    [quantity]="item.value"
+                    [item]="item"
                     (select)="ctrl.onSelect($event)">
                 </short-info-list-entry>
             </div>
             <div role="tabpanel" class="tab-pane" id="closed">
                 <short-info-list-entry
                     ng-repeat="item in ctrl.items.closed track by item.id"
-                    [id]="item.id"
-                    [name]="item.name"
-                    [quantity]="item.value"
+                    [item]="item"
                     (select)="ctrl.onSelect($event)">
                 </short-info-list-entry>
             </div>

@@ -9,9 +9,9 @@ import { Component, Input, Output, EventEmitter } from 'ng-forward';
                 <h3><currency-widget class="col-md-4" [value]="ctrl.item.value" [symbol]="'CHF'"></currency-widget></h3>
             </div>
             <div class="row">
-                <button class="btn btn-primary col-md-5" (click)="ctrl.onMoreOptions()">Weitere Optionen</button>
+                <button class="btn btn-danger col-md-5" (click)="ctrl.onArchive()">Ablegen</button>
                 <div class="col-md-2"></div>
-                <button class="btn btn-success col-md-5" (click)="ctrl.onArchive()">Ablegen</button>
+                <button class="btn btn-primary col-md-5" (click)="ctrl.onMoreOptions()">Weitere Optionen</button>
             </div>
         </div>
     `

@@ -11,18 +11,24 @@ import ShortInfoComponent from './short-info/short-info';
                 (select)="ctrl.selectBusinessCase($event.detail)"
                 class="col-md-4">
             </short-info-list>
-            <short-info
+            <short-info ng-if="ctrl.selectedBusinessCase"
                 [item]="ctrl.selectedBusinessCase"
-                (more-options)="ctrl.showMoreOptions($event.detail)"
-                (archive)="ctrl.archive($event.detail)"
+                (more-options)="ctrl.navigateToMoreOptions($event.detail.id)"
+                (archive)="ctrl.navigateToArchive($event.detail.id)"
                 class="col-md-8">
             </short-info>
             `
 })
-@Inject('$ngRedux', '$scope', 'BusinessCaseActions')
+@Inject('$ngRedux', '$scope', 'BusinessCaseActions', 'NavigationActions')
 export default class {
-    constructor($ngRedux, $scope, BusinessCaseActions) {
-        const unsubscribe = $ngRedux.connect(this.mapStateToThis, BusinessCaseActions)(this);
+    constructor($ngRedux, $scope, BusinessCaseActions, NavigationActions) {
+        const actions = {
+                selectBusinessCase: BusinessCaseActions.selectBusinessCase,
+                triggerFetchBusinessCases: BusinessCaseActions.triggerFetchBusinessCases,
+                navigateToMoreOptions: NavigationActions.navigateToMoreOptions,
+                navigateToArchive: NavigationActions.navigateToArchive
+            },
+            unsubscribe = $ngRedux.connect(this.mapStateToThis, actions)(this);
 
         $scope.$on('$destroy', unsubscribe);
     }
@@ -38,13 +44,5 @@ export default class {
         if (!this.businessCases) {
             this.triggerFetchBusinessCases();
         }
-    }
-
-    showMoreOptions(businessCase) {
-        console.log(businessCase);
-    }
-
-    archive(businessCase) {
-        console.log(businessCase);
     }
 }

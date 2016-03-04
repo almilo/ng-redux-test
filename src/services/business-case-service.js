@@ -1,3 +1,5 @@
+import { copy } from 'angular';
+
 const mockBusinessCases = {
     open: [
         {
@@ -47,6 +49,40 @@ export default class {
     }
 
     getAllBusinessCases() {
-        return this.$q.resolve(mockBusinessCases);
+        return this.$q.resolve(copy(mockBusinessCases));
     }
+
+    getBusinessCase(id) {
+        return this.$q.resolve(copy(findById(mockBusinessCases, id)));
+    }
+
+    archiveBusinessCase(id) {
+        removeById(mockBusinessCases, id);
+
+        return this.$q.resolve();
+    }
+}
+
+function findById(businessCases, id) {
+    const byId = byIdMatcher(id);
+
+    return businessCases.open.find(byId) ||
+        businessCases.pending.find(byId) ||
+        businessCases.closed.find(byId);
+}
+
+function removeById(businessCases, id) {
+    const byId = byIdMatcher(id);
+
+    [businessCases.open, businessCases.closed, businessCases.pending].forEach(collection => {
+        const index = collection.findIndex(byId);
+
+        if (index !== -1) {
+            collection.splice(index, 1);
+        }
+    });
+}
+
+function byIdMatcher(id) {
+    return businessCase => businessCase.id == id;
 }
